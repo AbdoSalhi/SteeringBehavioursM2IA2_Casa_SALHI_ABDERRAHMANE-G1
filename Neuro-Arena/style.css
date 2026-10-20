@@ -1,0 +1,136 @@
+html, body {
+  margin: 0;
+  padding: 0;
+  background: #070b1a;
+  color: #eaf4ff;
+  font-family: "Segoe UI", sans-serif;
+}
+
+body {
+  overflow: hidden;
+}
+
+canvas {
+  display: block;
+  border-right: 1px solid rgba(255, 255, 255, 0.15);
+}
+
+#app {
+  position: relative;
+}
+
+.panel {
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 320px;
+  height: 100vh;
+  background: rgba(17, 22, 38, 0.82);
+  border-left: 1px solid rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(8px);
+  box-sizing: border-box;
+  padding: 14px 16px 18px;
+  overflow: auto;
+}
+
+.panel h1 {
+  margin: 0 0 12px;
+  font-size: 1.3rem;
+  letter-spacing: 0.04em;
+}
+
+.panel h2 {
+  margin: 22px 0 8px;
+  font-size: 0.9rem;
+  color: #8ab8ff;
+  text-transform: uppercase;
+}
+
+.panel .stat {
+  display: flex;
+  justify-content: space-between;
+  margin: 6px 0;
+  color: #dfe7ff;
+  font-size: 0.9rem;
+}
+
+.panel .list {
+  margin: 0;
+  padding-left: 18px;
+}
+
+.panel .list li {
+  margin: 4px 0;
+  color: #dfe7ff;
+}
+
+input, select, button {
+  font: inherit;
+}
+
+select, button {
+  width: 100%;
+  margin-top: 8px;
+  padding: 8px 10px;
+  border-radius: 10px;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  background: rgba(19, 27, 51, 0.95);
+  color: #edf8ff;
+}
+
+button {
+  cursor: pointer;
+  transition: 120ms ease;
+}
+
+button:hover {
+  filter: brightness(1.08);
+}
+
+.checkbox-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin: 8px 0;
+  color: #eef7ff;
+  font-size: 0.9rem;
+}
+
+.badge {
+  display: inline-block;
+  min-width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  margin-right: 8px;
+  vertical-align: middle;
+}
+
+.legend {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin: 4px 0;
+  color: #dfe7ff;
+  font-size: 0.85rem;
+}
+
+#banner {
+  position: absolute;
+  left: 50%;
+  top: 14px;
+  transform: translateX(-50%);
+  padding: 8px 16px;
+  border-radius: 999px;
+  background: rgba(17, 18, 26, 0.7);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  color: #f5fbff;
+  font-weight: 600;
+  letter-spacing: 0.03em;
+  opacity: 0;
+  transition: opacity 200ms ease;
+  pointer-events: none;
+}
+
+#banner.visible {
+  opacity: 1;
+}

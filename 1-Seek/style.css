@@ -1,0 +1,100 @@
+html, body {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  background: #000;
+  color: #f5f5f5;
+  font-family: system-ui, sans-serif;
+}
+
+body {
+  display: flex;
+  flex-direction: column;
+}
+
+#controls {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 8px 18px;
+  padding: 10px 16px;
+  background: #20242c;
+  z-index: 1;
+}
+
+.control {
+  display: grid;
+  grid-template-columns: auto minmax(90px, 150px) auto;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.8rem;
+}
+
+.scenario-picker {
+  grid-template-columns: auto minmax(220px, 1fr);
+}
+
+#scenario {
+  width: 100%;
+  min-height: 28px;
+}
+
+.control input {
+  width: 100%;
+  min-height: 28px;
+  accent-color: #89b4ff;
+}
+
+.control select {
+  min-height: 28px;
+  color: #f5f5f5;
+  background: #343a46;
+  border: 1px solid #657084;
+  border-radius: 4px;
+}
+
+.scenario-escape-only[hidden] {
+  display: none;
+}
+
+.control output {
+  min-width: 36px;
+  font-variant-numeric: tabular-nums;
+}
+
+.hint {
+  font-size: 0.85rem;
+  color: #c5cbd5;
+}
+
+#scene {
+  flex: 1;
+  min-height: 0;
+}
+
+canvas {
+  display: block;
+}
+
+@media (max-width: 700px) {
+  #controls {
+    gap: 6px 12px;
+    padding: 8px;
+  }
+
+  .control {
+    grid-template-columns: auto minmax(65px, 1fr) auto;
+    flex: 1 1 45%;
+  }
+
+  .scenario-picker {
+    grid-template-columns: auto minmax(180px, 1fr);
+    flex-basis: 100%;
+  }
+
+  .hint {
+    flex-basis: 100%;
+  }
+}

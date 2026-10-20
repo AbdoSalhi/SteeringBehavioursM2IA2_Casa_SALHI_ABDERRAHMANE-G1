@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="fr">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Le serpent et les poules — Steering Behaviors</title>
+
+    <link rel="stylesheet" type="text/css" href="style.css">
+
+    <script src="libraries/p5.min.js"></script>
+    <script src="libraries/p5.sound.min.js"></script>
+    <script src="vehicle.js"></script>
+    <script src="target.js"></script>
+    <script src="bouncingBall.js"></script>
+    <script src="boulder.js"></script>
+    <script src="eagle.js"></script>
+    <script src="obstacle.js"></script>
+    <script src="zone.js"></script>
+    <script src="decoy.js"></script>
+    <script src="pen.js"></script>
+    <script src="hen.js"></script>
+    <script src="queen.js"></script>
+    <script src="snake.js"></script>
+    <script src="levels.js"></script>
+    <script src="objective.js"></script>
+    <script src="level.js"></script>
+    <script src="sketch.js"></script>
+  </head>
+  <body>
+    <header id="controls" aria-label="Paramètres de la simulation">
+      <div class="control">
+        <label for="target-count">Poules</label>
+        <input id="target-count" type="range" min="0" max="30" step="1" value="12">
+        <output id="target-count-value" for="target-count">12</output>
+      </div>
+      <div class="control">
+        <label for="target-size">Taille poule</label>
+        <input id="target-size" type="range" min="6" max="18" step="1" value="12">
+        <output id="target-size-value" for="target-size">12</output>
+      </div>
+      <div class="control">
+        <label for="target-speed">Vitesse poule</label>
+        <input id="target-speed" type="range" min="1" max="10" step="0.5" value="3">
+        <output id="target-speed-value" for="target-speed">3</output>
+      </div>
+      <div class="control">
+        <label for="target-force">Force poule</label>
+        <input id="target-force" type="range" min="0.05" max="1" step="0.05" value="0.2">
+        <output id="target-force-value" for="target-force">0.20</output>
+      </div>
+      <div class="control">
+        <label for="snake-force">Force serpent</label>
+        <input id="snake-force" type="range" min="0.05" max="0.8" step="0.05" value="0.3">
+        <output id="snake-force-value" for="snake-force">0.30</output>
+      </div>
+      <div id="catch-counter" role="status" aria-live="polite">
+        Score : <output id="score-count">0</output>
+      </div>
+    </header>
+    <main id="scene" aria-label="Le serpent suit la souris et chasse les poules"></main>
+  </body>
+</html>

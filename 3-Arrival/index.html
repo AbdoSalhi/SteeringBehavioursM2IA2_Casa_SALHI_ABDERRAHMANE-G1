@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="fr">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Snake &amp; Mice</title>
+
+    <link rel="stylesheet" type="text/css" href="style.css">
+
+    <script src="libraries/p5.min.js"></script>
+    <script src="vehicle.js"></script>
+    <script src="spatialGrid.js"></script>
+    <script src="steering.js"></script>
+    <script src="obstacle.js"></script>
+    <script src="mouse.js"></script>
+    <script src="raptor.js"></script>
+    <script src="snake.js"></script>
+    <script src="foodOrb.js"></script>
+    <script src="snakeBot.js"></script>
+    <script src="effects.js"></script>
+    <script src="gameSound.js"></script>
+    <script src="sketch.js"></script>
+  </head>
+  <body>
+    <div id="game-canvas" aria-hidden="true"></div>
+    <main id="start-menu" class="start-menu">
+      <section class="menu-card" aria-labelledby="game-title">
+        <p class="eyebrow">Un petit jeu de steering behaviors</p>
+        <h1 id="game-title">Snake <span>&amp;</span> Mice</h1>
+        <p class="menu-description">Grandis, esquive les autres serpents et domine l’arène.</p>
+        <p class="best-score">Meilleur score : <strong id="best-score">0</strong></p>
+        <label class="identity-field">Pseudo <input id="player-name" maxlength="16" value="Joueur" autocomplete="nickname"></label>
+        <label class="identity-field">Qualité
+          <select id="menu-quality" aria-label="Qualité graphique">
+            <option value="low">Low — PC modeste</option>
+            <option value="medium">Medium</option>
+            <option value="high">High</option>
+            <option value="auto">Auto</option>
+          </select>
+        </label>
+        <label class="identity-field">Motif
+          <select id="menu-skin" aria-label="Motif du serpent">
+            <option value="circle">Uni</option>
+            <option value="stripes">Rayures lumineuses</option>
+          </select>
+        </label>
+        <div class="appearance-options">
+          <fieldset>
+            <legend>Couleur du serpent</legend>
+            <div id="menu-color-palette" class="color-palette"></div>
+            <div class="picker-line"><span>Couleur personnalisée</span><div id="menu-color-picker"></div></div>
+          </fieldset>
+          <fieldset>
+            <legend>Forme du corps</legend>
+            <select id="menu-shape" aria-label="Forme du serpent">
+              <option value="circle">Cercles</option>
+              <option value="glow">Cercles avec contour lumineux</option>
+              <option value="diamond">Losanges</option>
+              <option value="star">Étoiles</option>
+              <option value="hexagon">Hexagones</option>
+              <option value="tapered">Cercles effilés</option>
+            </select>
+            <div id="snake-preview" class="snake-preview" aria-label="Aperçu du serpent">
+              <i class="preview-head"></i><i></i><i></i><i></i><i></i><i></i><i></i>
+            </div>
+          </fieldset>
+        </div>
+        <button id="play-button" type="button">PLAY</button>
+      </section>
+    </main>
+    <aside id="game-hud" class="game-hud" aria-live="polite" hidden>
+      <div>Longueur <strong id="score">10</strong> · Éliminations <strong id="caught-count">0</strong> · <span id="world-coordinates">0, 0</span></div>
+      <div class="hud-meters">
+        <span>Énergie</span><div class="meter"><i id="energy-meter"></i></div>
+        <span>Combo x<strong id="combo">1</strong></span><div class="meter"><i id="combo-meter"></i></div>
+      </div>
+      <button id="mute-button" type="button" aria-label="Couper le son">♫</button>
+    </aside>
+    <aside id="leaderboard" class="leaderboard" aria-label="Classement" hidden></aside>
+    <aside id="minimap" class="minimap" aria-label="Mini-carte" hidden><canvas id="minimap-canvas" width="156" height="156"></canvas></aside>
+    <div id="kill-message" class="kill-message" aria-live="polite"></div>
+    <div id="countdown" class="countdown" aria-live="assertive" hidden></div>
+    <div id="death-vignette" class="death-vignette" hidden></div>
+    <button id="settings-button" class="settings-button" type="button" aria-label="Ouvrir les paramètres" title="Paramètres (P)" hidden>⚙</button>
+    <section id="settings-panel" class="settings-panel" aria-labelledby="settings-title" hidden>
+      <div class="settings-heading">
+        <h2 id="settings-title">Paramètres</h2>
+        <button id="settings-close" class="icon-close" type="button" aria-label="Fermer les paramètres">×</button>
+      </div>
+      <div id="settings-sliders"></div>
+      <label class="identity-field">Qualité graphique
+        <select id="settings-quality" aria-label="Qualité graphique">
+          <option value="low">Low — PC modeste</option>
+          <option value="medium">Medium</option>
+          <option value="high">High</option>
+          <option value="auto">Auto</option>
+        </select>
+      </label>
+      <label class="mute-setting"><input id="limit-30-fps" type="checkbox"> Limiter à 30 FPS</label>
+      <fieldset>
+        <legend>Couleur du serpent</legend>
+        <div id="settings-color-palette" class="color-palette"></div>
+        <div class="picker-line"><span>Couleur personnalisée</span><div id="settings-color-picker"></div></div>
+      </fieldset>
+      <fieldset>
+        <legend>Forme du corps</legend>
+        <select id="settings-shape" aria-label="Forme du serpent">
+          <option value="circle">Cercles</option>
+          <option value="glow">Cercles avec contour lumineux</option>
+          <option value="diamond">Losanges</option>
+          <option value="star">Étoiles</option>
+          <option value="hexagon">Hexagones</option>
+          <option value="tapered">Cercles effilés</option>
+        </select>
+      </fieldset>
+      <label class="mute-setting"><input id="mute-setting" type="checkbox"> Son activé</label>
+      <div class="settings-actions">
+        <button id="settings-reset" type="button">Réinitialiser</button>
+        <button id="settings-close-bottom" type="button">Fermer</button>
+      </div>
+    </section>
+    <main id="pause-menu" class="state-overlay" hidden>
+      <section class="menu-card state-card">
+        <h2>Pause</h2>
+        <p>Appuie sur P ou ESC pour reprendre.</p>
+        <button id="resume-button" type="button">Reprendre</button>
+      </section>
+    </main>
+    <main id="gameover-menu" class="state-overlay" hidden>
+      <section class="menu-card state-card">
+        <p class="eyebrow">Partie terminée</p>
+        <h2>Tu es mort</h2>
+        <p id="new-record" class="new-record" hidden>NEW RECORD !</p>
+        <p>Longueur finale : <strong id="final-score">0</strong></p>
+        <p>Éliminations : <strong id="final-kills">0</strong></p>
+        <p>Temps de survie : <strong id="final-survival">0 s</strong></p>
+        <p>Meilleur score : <strong id="final-best">0</strong></p>
+        <div class="state-actions">
+          <button id="replay-button" type="button">Rejouer</button>
+          <button id="menu-button" type="button">Menu</button>
+        </div>
+      </section>
+    </main>
+  </body>
+</html>
